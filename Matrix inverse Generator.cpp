@@ -39,9 +39,9 @@ void printmatrix(int maix[3][3], int clo , int row   )
 	}
 	cout << "------------------------\n\n";
 }
-void printmatrix2(int maix[3][3], int clo , int row   )
+void printinversematrix(int maix[3][3], int clo , int row   )
 {
-	
+	cout << "Inverse of matrix \n\n" ;	
 	for (int i = 0; i < clo; i++)
 	{
 		for (int j = 0;j < row;j++)
