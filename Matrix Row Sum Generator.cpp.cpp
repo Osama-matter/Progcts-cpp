@@ -1,5 +1,5 @@
 #include <iostream>
-#include <string>
+#include <cstdlib>
 #include<stdio.h>
 #include <ctime> 
 using namespace std;
@@ -37,20 +37,26 @@ void printmatrix(int maix[3][3], int clo , int row   )
 }
 int sumrowelements(int maix[3][3],   int rownumber , int row)
 {
-	int sumr1 = 0;                                                   // use for loop to sum element in row ; 
+	int sumr1 = 0;  
+	int sumr[row ] ;                                                  // use for loop to sum element in row ; 
 	for (int j = 0; j < row;j++)
 	{
-		sumr1 += maix[rownumber][j];
+		sumr[j] = maix[j][rownumber];
+	}
+
+	for (int j= 0 ; j<row ; j++)
+	{
+		sumr1 +=sumr[j] ; 
 	}
 	return sumr1; 
 
 }
 void printsumofrowelements(int maix[3][3] , int row , int clo  )
 {
-	cout << "sum of element in row .\n\n";
+	cout << "sum of element in colum .\n\n";
 	for (int j = 0; j < row;j++)
 	{
-		cout << "Sum elemntes in row [" << j + 1 << "] =" << sumrowelements(maix   , j , clo) << endl;
+		cout << "Sum elemntes in colum [" << j + 1 << "] =" << sumrowelements(maix   , j , clo) << endl;
 		//sumr1 = 0;
 
 	}
@@ -58,7 +64,7 @@ void printsumofrowelements(int maix[3][3] , int row , int clo  )
 int main()
 {
 	srand(time(0));
-	cout << "Elemntes in row\n";
+	cout << "Elemntes in colum\n";
 	int row =3, clo=3 , sumr1;
 	int maix[3][3];
 	Generatematrix(3,3,maix);
