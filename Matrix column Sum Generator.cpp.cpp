@@ -64,7 +64,7 @@ void printsumofrowelements(int maix[3][3] , int row , int clo  )
 int main()
 {
 	srand(time(0));
-	cout << "Elemntes in colum\n";
+	cout << "Elemntes in column\n";
 	int row =3, clo=3 , sumr1;
 	int maix[3][3];
 	Generatematrix(3,3,maix);
