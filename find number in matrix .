@@ -39,7 +39,7 @@ void printmatrix(int maix[3][3], int clo , int row   )
 	}
 	cout << "------------------------\n\n";
 }
-int clasumofmatrix(int maix[3][3] , int number )
+bool clasumofmatrix(int maix[3][3] , int number )
 {
 	int sum = 0 ; 
 	for (int i = 0; i < 3; i++)
@@ -50,12 +50,9 @@ int clasumofmatrix(int maix[3][3] , int number )
 			{
 				return true  ;
 			}
-			else
-			{
-				return false ;
-			}
 		}
 	}
+	return false ;
 }
 void printresulats(int maix[3][3], int number )
 {
