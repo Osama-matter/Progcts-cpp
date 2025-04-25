@@ -30,7 +30,7 @@ void printmatrix(int maix[3][3], int clo , int row   )
 	}
 	cout << "------------------------\n\n";
 }
-bool clasumofmatrix(int maix[3][3] ,int maix2[3][3] ,int number )
+bool checkelementsfond(int maix[3][3] ,int maix2[3][3] ,int number )
 {
 	int sum = 0 ; 
 	for (int i = 0; i < 3; i++)
@@ -54,7 +54,7 @@ void printresulats(int maix[3][3],int maix2[3][3], int &number )
 		for (int j = 0 ; j <3 ; j++)
 		{
 			number = maix[i][j] ;
-			if (clasumofmatrix(maix,maix2,number))
+			if (checkelementsfond(maix,maix2,number))
 			{
 				cout << number <<"   " ;
 			}
