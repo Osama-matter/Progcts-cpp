@@ -1,83 +1,43 @@
 #include <iostream>
 #include<string>
 using namespace std;
-string Getname()
+char Getchar()
 {
-    string s1 = " ";
-    cout << "Enter youer name ? \n\n";
-    getline(cin, s1);
+    char  s1 = ' ';
+    cout << "Enter Char  ? \n";
+    cin >> s1;
     return s1;
 
 }
-void uppercharbyme(string& s1)
+void detremanchar(char s1)
 {
-    char c1 = ' ';
-    cout << "\tUppper fanction By me  . \n\n";
-    for (int i = 0;i < s1.length();i++)
+    if (s1 <= 122 && s1 >= 97)
     {
-        if (s1[i] != ' ' && s1[i] <= 122 && s1[i] >= 97)
-        {
-            c1 = s1[i] - 32;
-            cout << c1;
+        s1 = toupper(s1);
 
-        }
-        else
-        {
-            cout << s1[i];
-        }
-
+        cout << s1 <<endl ;
     }
-
+    else if (s1 <= 90 && s1 >= 65)
+    {
+        s1 = tolower(s1);
+        cout << s1 << endl;
+    }
+    else
+    {
+        cout << "Not char  \n"; 
+    }
 }
-void uppercharbycomputer(string s1)
+char inversecharbyisupper(char s1)
 {
-    cout << "\n\tto upper by using computer \n\n";
-    for (int i = 0;i < s1.length();i++)
-    {
-        s1[i] = toupper(s1[i]);
-        cout << s1[i];
-    }
-
-    cout << endl;
-}
-void lowercharbyme(string& s1)
-{
-    char c1 = ' ';
-    cout << "\tlower fanction By me  . \n\n";
-    for (int i = 0;i < s1.length();i++)
-    {
-        if (s1[i] != ' ' && s1[i] <= 90 && s1[i] >= 65)
-        {
-            c1 = s1[i] + 32;
-            cout << c1;
-
-        }
-        else
-        {
-            cout << s1[i];
-        }
-
-    }
-
-}
-void lowercharbycomputer(string s1)
-{
-    cout << "\n\tto lower by using computer \n\n ";
-    for (int i = 0;i < s1.length();i++)
-    {
-        s1[i] = tolower(s1[i]);
-        cout << s1[i];
-    }
-    cout << endl;
+    return isupper(s1) ? tolower(s1) : toupper(s1);
 }
 int main()
 {
-
-    string s1 = Getname();
-    uppercharbyme(s1);
-    uppercharbycomputer(s1);
-    lowercharbyme(s1);
-    lowercharbycomputer(s1);
+    char s1 = Getchar();
+    cout << "inverse number in Assmole code  \n";
+    detremanchar(s1);
+    cout << "inverse By to () \n";
+    cout << inversecharbyisupper(s1);
 
     return 0;
 }
