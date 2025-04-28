@@ -1,46 +1,44 @@
-#include<iostream>
+#include <iostream>
 #include <vector>
-using namespace std ; 
-int GetNUmber()
-{
-    int  number =0 ; 
-    do
-    {
-        cout <<"Enter Number ? \n" ;
-        cin >> number ;
-    } while (number<=0);
-    return number  ; 
+using namespace std;
+
+int GetNumber() {
+    int number = 0;
+    do {
+        cout << "Enter a positive number: ";
+        cin >> number;
+    } while (number <= 0);
+    return number;
 }
-void GenerateFibonaccinumbers( vector <int > &Fibonaccinumber ,  int number  )
-{
-   
-    int val1 =0 ; 
-    int val2 =0 ;
-    int sum1 = 0 ;
-    int sum2 =0 ;
-   
-    for (int i = 0 ; i< number  ; i++)
-    {
-        sum1 = val1 + val2 ;
-        val1 = val2 ;
-        val2 = i  ;
-        sum2 = sum1 + val2 ;
-        Fibonaccinumber[i] = sum2  ;  
-    } 
-}
-void printresulats(vector <int > Fibonaccinumber)
-{
-    for (int &num  :Fibonaccinumber)
-    {
-        cout << num << "    " ;
+
+void GenerateFibonacciNumbers(vector<int>& FibonacciNumbers, int number) {
+    int val1 = 0, val2 = 1; // Correct initialization
+    int sum = 1;
+    for (int i = 0; i < number; i++) {
+        
+        
+        FibonacciNumbers.push_back(sum);
+        sum = val1 + val2;
+        val1 = val2;
+        val2 = sum;
+    
     }
 }
-int main ()
-{
-    int number  ;
-    vector <int > Fibonaccinumber ;
-    GetNUmber() ; 
-    GenerateFibonaccinumbers(Fibonaccinumber ,number) ;
-    printresulats(Fibonaccinumber) ;
 
+void PrintResults(const vector<int>& FibonacciNumbers) {
+    for (int num : FibonacciNumbers) {
+        cout << num << "    ";
+    }
+    cout << endl;
+}
+
+int main() {
+    int number = GetNumber();
+    vector<int> FibonacciNumbers;
+
+    GenerateFibonacciNumbers(FibonacciNumbers, number);
+    cout << "FIlbonacci number is : ";
+    PrintResults(FibonacciNumbers);
+
+    return 0;
 }
