@@ -3,33 +3,77 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-
-
-string JoinString(const vector <string >& text ,string dime  )
+string ReadString()
 {
-	string s1 = "";
-	for (const string& word : text)
-	{
-		s1 =s1 +word + dime ;
-	}
-	return s1.substr(0, s1.length() - dime.length());
+	string S1;
+	cout << "Please Enter Your String?\n";
+	getline(cin, S1);
+	return S1;
 }
-string JoinString(string arry[], int lengthofarry, string dime)
+string lowercharbycomputer(string s1)
 {
-	string s2 = "";
-	for (int i = 0;i < lengthofarry; i++)
+	for (int i = 0;i < s1.length();i++)
 	{
-		s2 = s2 +arry[i] + dime; 
+		s1[i] = tolower(s1[i]);
+
 	}
-	return s2.substr(0, s2.length() - dime.length());
+	return s1;
+}
+void splitfanction(string S1, vector <string >& text, string dime)
+{
+	int token = 0;
+	;
+	short pos = 0;
+	string word;
+	while ((pos = S1.find(dime)) != std::string::npos)
+	{
+		token++;
+		word = S1.substr(0, pos);
+		if (word != dime)
+		{
+			text.push_back(word);
+
+		}
+		S1.erase(0, pos + dime.length());
+	}
+	if (S1 != "")
+	{
+		token++;
+		text.push_back(S1);
+	}
+}
+void Replasefanction( vector <string >& text ,const string &toReplase ,const string &Replaseword)
+{
+	for (string &word : text)
+	{
+		if (word == toReplase)
+		{
+			word = Replaseword;
+		}
+		else if (lowercharbycomputer(word) == lowercharbycomputer(toReplase))
+		{
+			word = Replaseword;
+		}
+		
+	}
+}
+void printresulats(const vector<string> &text)
+{
+	for (string word : text)
+	{
+		cout << word << " ";
+	}
 }
 int main()
 {
-	string  arry[] = {"osama" , "Ahmed" , "matter"};
-	vector <string > text = {"osama" ,"Ahmed" , "Matter"};
-	cout << "Join Arry by Vector . \n ";
-	cout << JoinString(text ,",") <<endl ;
-	cout << "Join Arry by arry .\n";
-	cout << JoinString(arry, 3, "**");
+	string S1 = ReadString();
+	vector <string > text;
+	string toReplase = "osama";
+	string Replaseword = "os";
+	cout << "String Before Replase . \n" << S1 << endl;
+	cout << "String After Reblase . \n";
+	splitfanction(S1, text, " ");
+	Replasefanction(text, toReplase, Replaseword);
+	printresulats(text);
 	system("pause>0");
 }
