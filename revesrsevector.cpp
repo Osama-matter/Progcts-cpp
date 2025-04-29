@@ -3,33 +3,51 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-
-
-string JoinString(const vector <string >& text ,string dime  )
+string ReadString()
 {
-	string s1 = "";
-	for (const string& word : text)
-	{
-		s1 =s1 +word + dime ;
-	}
-	return s1.substr(0, s1.length() - dime.length());
+	string S1;
+	cout << "Please Enter Your String?\n";
+	getline(cin, S1);
+	return S1;
 }
-string JoinString(string arry[], int lengthofarry, string dime)
+void splitfanction(string S1, vector <string >& text, string dime)
 {
-	string s2 = "";
-	for (int i = 0;i < lengthofarry; i++)
+
+	short pos = 0;
+	string word;
+	while ((pos = S1.find(dime)) != std::string::npos)
 	{
-		s2 = s2 +arry[i] + dime; 
+		word = S1.substr(0, pos);
+		if (word != dime)
+		{
+			text.push_back(word);
+
+		}
+		S1.erase(0, pos + dime.length());
 	}
-	return s2.substr(0, s2.length() - dime.length());
+	if (S1 != "")
+	{
+		
+		text.push_back(S1);
+	}
+
+}
+string ReverseVector(vector <string >& text, string S2)
+{
+	for (int i = text.size()-1; i >= 0;i--)
+	{
+		S2 += text[i];
+		if (i > 0)
+			S2 += "";
+	}
+	return S2;
 }
 int main()
 {
-	string  arry[] = {"osama" , "Ahmed" , "matter"};
-	vector <string > text = {"osama" ,"Ahmed" , "Matter"};
-	cout << "Join Arry by Vector . \n ";
-	cout << JoinString(text ,",") <<endl ;
-	cout << "Join Arry by arry .\n";
-	cout << JoinString(arry, 3, "**");
-	system("pause>0");
+
+	string S2;
+	vector <string > text; 
+	string S1 = ReadString();
+	splitfanction(S1, text, " ");
+	cout << "After \n" << ReverseVector(text, S2) <<endl ;
 }
