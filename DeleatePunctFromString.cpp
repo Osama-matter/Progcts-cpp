@@ -1,35 +1,28 @@
-
-#include <string>
-#include <iostream>
-#include <vector>
+#include<iostream>
+#include<string>
+#include <cctype>
 using namespace std;
-
-
-string JoinString(const vector <string >& text ,string dime  )
+string Getstring()
 {
-	string s1 = "";
-	for (const string& word : text)
-	{
-		s1 =s1 +word + dime ;
-	}
-	return s1.substr(0, s1.length() - dime.length());
+	string S1 = "";
+	cout << "Enter String \n";
+	getline(cin, S1);
+	return S1;
 }
-string JoinString(string arry[], int lengthofarry, string dime)
+void DeleatPancatewationmark(string &S1)
 {
-	string s2 = "";
-	for (int i = 0;i < lengthofarry; i++)
+	for (int i = 0; i < S1.length();i++)
 	{
-		s2 = s2 +arry[i] + dime; 
+		if (!ispunct(S1[i]))  // Dont use S1[i] != ispunt(S1[i] Becouse this fanction return true Or false Cant Compere this By String .
+		{
+			cout << S1[i];
+		}
 	}
-	return s2.substr(0, s2.length() - dime.length());
 }
 int main()
 {
-	string  arry[] = {"osama" , "Ahmed" , "matter"};
-	vector <string > text = {"osama" ,"Ahmed" , "Matter"};
-	cout << "Join Arry by Vector . \n ";
-	cout << JoinString(text ,",") <<endl ;
-	cout << "Join Arry by arry .\n";
-	cout << JoinString(arry, 3, "**");
-	system("pause>0");
+	string S1 = Getstring();
+	cout << "String Before Deleat Punct \n";
+	DeleatPancatewationmark(S1);
+	return 0;
 }
