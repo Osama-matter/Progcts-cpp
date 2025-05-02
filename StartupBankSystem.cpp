@@ -13,7 +13,7 @@ struct Datefromcastomar {
     string Name;
     string Number;
     int AccountBalance;
-    bool found = false; 
+    bool found = false;
 };
 
 string GetClientNumber(string massager) {
@@ -53,15 +53,15 @@ Datefromcastomar extractClient(const vector<string>& text, int startIndex) {
         p.Name = text[startIndex + 2];
         p.Number = text[startIndex + 3];
         p.AccountBalance = stoi(text[startIndex + 4]);
-        p.found = true; 
+        p.found = true;
     }
     return p;
 }
 float GetDepositAmount(string Massage)
 {
-    float Deposit=0;
+    float Deposit = 0;
     char chose = ' ';
-    cout <<Massage ;
+    cout << Massage;
     cin >> Deposit;
     cout << " You are Sure  to Make Deposit (y / n) \n";
     cin >> chose;
@@ -69,7 +69,7 @@ float GetDepositAmount(string Massage)
     {
         cout << "Opreration Suceccful \n";
         return Deposit;
-        
+
 
     }
     else
@@ -124,15 +124,15 @@ bool ifuserwonttoDelet()
 {
     bool Deleat = false;
     char chose = ' ';
-    cout << "Do you wont to Edit User (y /n) ?  \n"; 
+    cout << "Do you wont to Edit User (y /n) ?  \n";
     cin >> chose;
-    return (chose == 'y' ||chose== 'Y');
+    return (chose == 'y' || chose == 'Y');
 }
 Datefromcastomar GetDataToEditIt(Datefromcastomar& p1)
 {
- 
+
     cout << "\nEnter Account Possaword  ? ";
-    getline(cin>> ws, p1.AccountPassword);
+    getline(cin >> ws, p1.AccountPassword);
     cout << "\nEnter Name ? ";
     getline(cin, p1.Name);
     cout << "\nEnter Your Number ? ";
@@ -182,14 +182,14 @@ void StartShowClientList()
     cout << "==================================================================================================\n\n";
     //string ClintNumber = GetClientNumber();
     string fileContent = ReadFile("emplyeefile.txt");
-    vector<string> text; 
+    vector<string> text;
     splitFunction(fileContent, text, "#//");
     Datefromcastomar p;
-    for (int i = 0;i < text.size(); i+=5)
+    for (int i = 0;i < text.size(); i += 5)
     {
-        p=extractClient(text, i);
+        p = extractClient(text, i);
         printClient(p);
-    } 
+    }
 }
 void StartEditFanction() {
     char answer;
@@ -198,8 +198,8 @@ void StartEditFanction() {
         cout << "==================================================================================================\n\n";
         cout << "\t\t Edit Mode\t\t              \n\n";
         cout << "==================================================================================================\n\n";
-        
-        string S2; 
+
+        string S2;
         string ClintNumber = GetClientNumber("Enter User Number Do you Wont To Edit Info ? ");
         string fileContent = ReadFile("emplyeefile.txt");
         vector<string> text;
@@ -214,18 +214,18 @@ void StartEditFanction() {
         vector<Datefromcastomar> filteredClients;
 
         Datefromcastomar resulats;
-        resulats = FindClientByAccountNumber(ClintNumber, clients); 
+        resulats = FindClientByAccountNumber(ClintNumber, clients);
 
-        if (resulats.found ) {
+        if (resulats.found) {
             for (const auto& c : clients) {
                 if (c.AccountNumber != ClintNumber) {
                     filteredClients.push_back(c);
-               
+
                 }
             }
             printClient(resulats);
 
-           
+
             if (ifuserwonttoDelet())
             {
                 GetDataToEditIt(resulats);
@@ -234,7 +234,7 @@ void StartEditFanction() {
                 SaveClientsToFile(filteredClients, "emplyeefile.txt");
             }
 
-           
+
 
             cout << "\nClient Edited successfully.\n";
         }
@@ -255,7 +255,7 @@ void StarttoDeleteClientFile() {
         cout << "==================================================================================================\n\n";
         cout << "\t\t Delete Mode \t\t              \n\n";
         cout << "==================================================================================================\n\n";
-        
+
 
         string ClintNumber = GetClientNumber("Enter User Number Do you Wont To Delete Info ? ");
         string fileContent = ReadFile("emplyeefile.txt");
@@ -309,7 +309,7 @@ void StarttoAddClientinFile()
         cout << "==================================================================================================\n\n";
         cout << "\t\t Add Mode \t\t              \n\n";
         cout << "==================================================================================================\n\n";
-        
+
 
         string fileContent = ReadFile("emplyeefile.txt");
         vector<string> text;
@@ -360,7 +360,7 @@ void StartToFindClient() {
         cout << "==================================================================================================\n\n";
         cout << "\t\t FInd Mode \t\t              \n\n";
         cout << "==================================================================================================\n\n";
-        
+
         string ClintNumber = GetClientNumber("Enter User Number Do you Wont To Find Info ? ");
         string fileContent = ReadFile("emplyeefile.txt");
         vector<string> text;
@@ -376,7 +376,7 @@ void StartToFindClient() {
         if (result.found) {
             printClient(result);
 
-            
+
         }
         else {
             cout << "\nClient not found.\n";
@@ -412,10 +412,10 @@ void StartToMakeDepositClient() {
         for (auto& c : clients) {
             if (c.AccountNumber == ClintNumber) {
                 found = true;
-          
+
                 if (depositAmount > 0) {
                     c.AccountBalance += depositAmount;
-                    cout << "Deposit successful. New balance: "  <<endl;
+                    cout << "Deposit successful. New balance: " << endl;
                     printClient(c);
                 }
                 break;
@@ -427,9 +427,9 @@ void StartToMakeDepositClient() {
         }
         SaveClientsToFile(clients, "emplyeefile.txt");
 
-        
-     
-       
+
+
+
 
         cout << "Do you want to Deposit for another client? (y/n): ";
         cin >> answer;
@@ -463,7 +463,7 @@ void StartToMakeWithdrawClient() {
             if (c.AccountNumber == ClintNumber) {
                 found = true;
 
-                if (WithdrawAmount > 0 &&c.AccountBalance>WithdrawAmount) {
+                if (WithdrawAmount > 0 && c.AccountBalance > WithdrawAmount) {
                     c.AccountBalance -= WithdrawAmount;
                     cout << "Withdraw successful. New balance: " << endl;
                     printClient(c);
@@ -486,39 +486,29 @@ void StartToMakeWithdrawClient() {
 
     } while (tolower(answer) == 'y');
 }
-void StartToClaTotalBalanced() 
+void StartToClaTotalBalanced()
 {
     system("cls");
     cout << "==================================================================================================\n\n";
     cout << "\t\t Total Balanced Mode \t\t              \n\n";
     cout << "==================================================================================================\n\n";
 
-
     string fileContent = ReadFile("emplyeefile.txt");
     vector<string> text;
-    splitFunction(fileContent, text, "#//");
+    splitFunction(fileContent, text, "#//");  // You forgot this
+
     double TotlalBalanced = 0;
-    bool found = false;
-
-    vector<Datefromcastomar> clients;
+    
     for (size_t i = 0; i + 4 < text.size(); i += 5) {
-        clients.push_back(extractClient(text, i));
-        for (auto& c : clients)
-        {
-            TotlalBalanced += c.AccountBalance;
-            printClient(c);
-            
-            break;
-            
-
+        Datefromcastomar client = extractClient(text, i);
+        if (client.found) {
+            TotlalBalanced += client.AccountBalance;
         }
     }
-    cout << "\n\t\t\t\t\t\t\t\tTotla balance =  " << TotlalBalanced << " $" << endl;
-
-
-
-
+    StartShowClientList() ;
+    cout << "\nTotal Balance for All Clients: " << TotlalBalanced << " \n";
 }
+
 void StartTranScaction()
 {
     short chose = 0;
@@ -553,7 +543,7 @@ void StartTranScaction()
     case(4):
         cout << "Press Any Key To Return ...";
         _getch();
-        
+
         break;
     default:
         cout << "Un valed Chose ! \n";
@@ -617,13 +607,13 @@ void StartSystem()
             cout << "===========================================================================================\n\n";
             break;
         default:
-            cout << "Un Valied Chose . \n"; 
+            cout << "Un Valied Chose . \n";
             cout << "Press Any Key To Return ...";
             _getch();
             break;
         }
 
- 
+
     } while (_getch());
 }
 
