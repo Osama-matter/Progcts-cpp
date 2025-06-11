@@ -5,7 +5,6 @@
 #include <iomanip>
 #include <conio.h> 
 
-
 using namespace std;
 
 struct Users {
@@ -14,7 +13,88 @@ struct Users {
     int Permation;
     bool found = false;
 };
+Users Login();
+Users UserCurrent; 
+enum enMainMenuePermissions {
+    eAll = -1, pListClients = 1, pAddNewClient = 2, pDeleteClient
+    = 4,
+    pUpdateClients = 8, pFindClient = 16, pTranactions = 32,
+    pManageUsers = 64
+};
+bool ifHavepermation(enMainMenuePermissions permation    )
+{
 
+    if (UserCurrent.Permation == enMainMenuePermissions::eAll)
+    {
+        return true; 
+    }
+    if ((permation & UserCurrent.Permation ) == permation)
+        return true;
+    else
+    {
+        return false; 
+    }
+}
+void StarttoShowMassage()
+{
+    cout << "\n------------------------------------\n";
+    cout << "Access Denied, \nYou dont Have Permission To Do this, \nPlease Conact Your Admin.";
+    cout << "\n------------------------------------\n";
+}
+int Readpermation()
+{
+    int permatio = 0 ; 
+    char answer = ' '; 
+    cout << "Do you wont to give full ascess system ?";
+    cin >> answer; 
+    if (answer == 'y' || answer == 'Y')
+    {
+        return -1; 
+    }
+    cout << "Do you wont to give  ascess to show clint list ?";
+    cin >> answer;
+    if (answer == 'y' || answer == 'Y')
+    {
+        permatio += enMainMenuePermissions::pListClients; 
+    }
+    cout << "Do you wont to give  ascess to Add clint  ?";
+    cin >> answer;
+    if (answer == 'y' || answer == 'Y')
+    {
+        permatio += enMainMenuePermissions::pAddNewClient;
+    }
+    cout << "Do you wont to give  ascess to Delete clint ?";
+    cin >> answer;
+    if (answer == 'y' || answer == 'Y')
+    {
+        permatio += enMainMenuePermissions::pDeleteClient;
+    }
+    cout << "Do you wont to give  ascess to Edit clint Data ?";
+    cin >> answer;
+    if (answer == 'y' || answer == 'Y')
+    {
+        permatio += enMainMenuePermissions::pUpdateClients;
+    }
+    cout << "Do you wont to give  ascess to find clint ?";
+    cin >> answer;
+    if (answer == 'y' || answer == 'Y')
+    {
+        permatio += enMainMenuePermissions::pFindClient;
+    }
+    cout << "Do you wont to give  ascess to Tranactions clint ?";
+    cin >> answer;
+    if (answer == 'y' || answer == 'Y')
+    {
+        permatio += enMainMenuePermissions::pTranactions;
+    }
+    cout << "Do you wont to give  ascess to mange users ?";
+    cin >> answer;
+    if (answer == 'y' || answer == 'Y')
+    {
+        permatio += enMainMenuePermissions::pManageUsers;
+    }
+    return permatio; 
+}
 string GetClientNumberUsers(string massager) {
     string Users;
     cout << massager;
@@ -56,6 +136,7 @@ Users extractClientUsers(const vector<string>& User, int startIndex) {
 }
 
 void printUsers(const Users& p) {
+    
     cout << " ---------------------------------------------------------------------------------------------\n";
     cout << "| " << setw(16) << left << "Account Name"
         << "| " << setw(16) << left << "Password"
@@ -77,7 +158,7 @@ void SaveUsersToFile(const vector<Users>& clients, string filename) {
         for (const auto& c : clients) {
             MyFile << c.AccountName << "#//"
                 << c.AccountPassword << "#//"
-                << c.Permation << "#//";
+                << c.Permation << "#//"<<endl ;
         }
         MyFile.close();
     }
@@ -141,16 +222,21 @@ Users GetDataToEditItUsers(Users& p1) {
     return p1;
 }
 
-Users GetDataUsers(Users& p1) {
+string  GetDataUsername() {
+    string UserName; 
     cout << "\nEnter Account Number ? ";
-    getline(cin >> ws, p1.AccountName);
-    cout << "\nEnter Account Possaword  ? ";
-    getline(cin >> ws, p1.AccountPassword);
-    cout << "\nEnter Permission (number) ? ";
-    cin >> p1.Permation;
-    return p1;
-}
+    getline(cin >> ws,UserName);
 
+
+    return UserName ;
+}
+string  GetDataPassword()
+{
+    string Password; 
+    cout << "\nEnter Account Possaword  ? ";
+    getline(cin >> ws, Password );
+    return Password ; 
+}
 string MakeDatainStringUsers(Users p1, string S2, string dime) {
     S2 += p1.AccountName + dime;
     S2 += p1.AccountPassword + dime;
@@ -275,9 +361,9 @@ void StarttoAddClientinFileUsers() {
         for (int i = 0; i + 2 < text.size(); i += 3) {
             clients.push_back(extractClientUsers(text, i));
         }
-
+       
         Users p1;
-        p1 = GetDataUsers(p1);
+        p1.AccountName = GetDataUsername();
 
         bool nameExists = false;
         for (const auto& c : clients) {
@@ -291,6 +377,9 @@ void StarttoAddClientinFileUsers() {
             cout << "\n[!] Client with the same name already exists. Cannot add.\n";
         }
         else {
+            p1.AccountPassword = GetDataPassword(); 
+            int permation = Readpermation();
+            p1.Permation = permation;
             clients.push_back(p1);
             SaveUsersToFile(clients, "Users.txt");
             cout << "\n[+] Client added successfully.\n";
@@ -332,11 +421,20 @@ void StartToFindClientUsers() {
 
 void StartSystemUsers() {
     do {
+
+
         system("cls");
         short Chose = 0;
         cout << "==================================================================================================\n\n";
         cout << "\t\t Client Management System\t\t              \n\n";
         cout << "==================================================================================================\n\n";
+        if (!(ifHavepermation(enMainMenuePermissions::pManageUsers)))
+        {
+            StarttoShowMassage();
+            ;
+            return;
+
+        }
         cout << "[1] Show Client List \n";
         cout << "[2] Add New Client \n";
         cout << "[3] Delete Clients \n";
@@ -449,6 +547,7 @@ float GetDepositAmount(string Massage)
 }
 
 void printClient(const Datefromcastomar& p) {
+
     cout << " ---------------------------------------------------------------------------------------------\n";
     cout << "| " << setw(16) << left << "Account Number"
         << "| " << setw(16) << left << "Pin Code"
@@ -540,10 +639,18 @@ void Printresulatsinfile(Datefromcastomar p1, string  dime, string S2)
 }
 void StartShowClientList()
 {
+
     system("cls");
     cout << "==================================================================================================\n\n";
     cout << "\t\t Show Client Data Mode\t\t              \n\n";
     cout << "==================================================================================================\n\n";
+    if (!(ifHavepermation(enMainMenuePermissions::pListClients)))
+    {
+        StarttoShowMassage();
+
+        return;
+
+    }
     //string ClintNumber = GetClientNumber();
     string fileContent = ReadFile("emplyeefile.txt");
     vector<string> text;
@@ -556,12 +663,19 @@ void StartShowClientList()
     }
 }
 void StartEditFanction() {
+
     char answer;
     do {
         system("cls");
         cout << "==================================================================================================\n\n";
         cout << "\t\t Edit Mode\t\t              \n\n";
         cout << "==================================================================================================\n\n";
+        if (!(ifHavepermation(enMainMenuePermissions::pUpdateClients)))
+        {
+            StarttoShowMassage();
+
+            return;
+        }
 
         string S2;
         string ClintNumber = GetClientNumber("Enter User Number Do you Wont To Edit Info ? ");
@@ -613,13 +727,20 @@ void StartEditFanction() {
 }
 
 void StarttoDeleteClientFile() {
+
     char answer;
     do {
         system("cls");
         cout << "==================================================================================================\n\n";
         cout << "\t\t Delete Mode \t\t              \n\n";
         cout << "==================================================================================================\n\n";
+        if (!(ifHavepermation(enMainMenuePermissions::pDeleteClient)))
+        {
+            StarttoShowMassage();
 
+            return;
+
+        }
 
         string ClintNumber = GetClientNumber("Enter User Number Do you Wont To Delete Info ? ");
         string fileContent = ReadFile("emplyeefile.txt");
@@ -667,13 +788,20 @@ void StarttoDeleteClientFile() {
 
 void StarttoAddClientinFile()
 {
+
     char again;
     do {
         system("cls");
         cout << "==================================================================================================\n\n";
         cout << "\t\t Add Mode \t\t              \n\n";
         cout << "==================================================================================================\n\n";
+        if (!(ifHavepermation(enMainMenuePermissions::pAddNewClient)))
+        {
+            StarttoShowMassage();
 
+            return;
+
+        }
 
         string fileContent = ReadFile("emplyeefile.txt");
         vector<string> text;
@@ -718,13 +846,20 @@ void StarttoAddClientinFile()
 
 
 void StartToFindClient() {
+
     char answer;
     do {
         system("cls");
         cout << "==================================================================================================\n\n";
         cout << "\t\t FInd Mode \t\t              \n\n";
         cout << "==================================================================================================\n\n";
+        if (!(ifHavepermation(enMainMenuePermissions::pFindClient)))
+        {
+            StarttoShowMassage();
 
+            return;
+
+        }
         string ClintNumber = GetClientNumber("Enter User Number Do you Wont To Find Info ? ");
         string fileContent = ReadFile("emplyeefile.txt");
         vector<string> text;
@@ -752,6 +887,7 @@ void StartToFindClient() {
 }
 
 void StartToMakeDepositClient() {
+
     char answer;
     do {
         system("cls");
@@ -875,11 +1011,19 @@ void StartToClaTotalBalanced()
 
 void StartTranScaction()
 {
+
     short chose = 0;
     system("cls");
     cout << "================================================================\n\n";
     cout << "Transaction Menue Screen  \n\n";
     cout << "================================================================\n\n";
+    if (!(ifHavepermation(enMainMenuePermissions::pTranactions)))
+    {
+        StarttoShowMassage();
+
+        return;
+
+    }
     cout << "[1] Depotie \n";
     cout << "[2] Withdraw \n";
     cout << "[3] Total Balacnce \n";
@@ -971,9 +1115,7 @@ void StartSystem()
             break; 
         case (8):
             system("cls");
-            cout << "===========================================================================================\n\n";
-            cout << "\t\tGood Lack \t\t \n\n";
-            cout << "===========================================================================================\n\n";
+            Login(); 
             break;
         default:
             cout << "Un Valied Chose . \n";
@@ -985,21 +1127,26 @@ void StartSystem()
 
     } while (_getch());
 }
-void Login() {
+
+Users Login() {
 
     char answer;
     Users result;
+    result.found = true ;
     do
     {
         system("cls");
         cout << "==================================================================================================\n\n";
         cout << "\t\t LOGIN \t\t              \n\n";
         cout << "==================================================================================================\n\n";
-
+        if (!result.found)
+        {
+            cout << "Unvaled User Name , Password . \n"; 
+        }
         string UserName = GetClientNumberUsers("Enter User Name  ? ");
         string password = GetClientNumberUsers("Enter Password ?");
         string fileContent = ReadUsersFileUsers("Users.txt");
-        vector<string> text;
+        vector<string> text;            
         splitFunctionUsers(fileContent, text, "#//");
 
         vector<Users> clients;
@@ -1009,9 +1156,11 @@ void Login() {
 
         result = FindUsersByAccountNumberAndPassword(UserName, password, clients);
     } while (!result.found);
-    StartSystem();
-}
+   
+    return result; 
+}   
 
 int main() {
-    Login(); 
+    UserCurrent =   Login(); 
+    StartSystem();
 }
