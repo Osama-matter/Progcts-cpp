@@ -64,21 +64,13 @@ Datefromcastomar extractClient(const vector<string>& text, int startIndex) {
 }
 float GetDepositAmount(string Massage)
 {
+
+
     float Deposit = 0;
-    char chose = ' ';
+   
     cout << Massage;
     cin >> Deposit;
-    cout << " You are Sure  to Make Deposit (y / n) \n";
-    cin >> chose;
-    if (chose == 'y' || chose == 'Y')
-    {
-        cout << "Opreration Suceccful \n";
-        return Deposit;
-
-
-    }
-    else
-        return 0;
+    return Deposit; 
 }
 
 void printClient(const Datefromcastomar& p) {
@@ -224,25 +216,14 @@ void StartToMakeDepositClient() {
         clients.push_back(extractClient(text, i));
     }
     Datefromcastomar result = FindClientByAccountNumber(ClintNumber, clients);
-    printClient(result);
-    bool found = false;
+    cout << "Curret total balance is  " << CurrentClient.AccountBalance << endl; 
+
     double depositAmount = GetDepositAmount("Enter Deposit Amount ? ");
-
-    for (auto& c : clients) {
-        if (c.AccountNumber == ClintNumber) {
-            found = true;
-
-            if (depositAmount > 0) {
-                c.AccountBalance += depositAmount;
-                cout << "Deposit successful. New balance: " << endl;
-                printClient(c);
-            }
-            break;
-        }
-    }
-
-    if (!found) {
-        cout << "\nClient not found.\n";
+    if (depositAmount > 0)
+    {
+        CurrentClient.AccountBalance += depositAmount;
+        cout << "Deposit successful. New balance: " << CurrentClient.AccountBalance << endl;
+        
     }
     SaveClientsToFile(clients, "emplyeefile.txt");
 }
@@ -327,18 +308,15 @@ void StartToMakeWithdrawClient() {
 
     double WithdrawAmount;
 
-    for (auto& c : clients) {
-        if (c.AccountNumber == ClintNumber) {
-            found = true;
-            WithdrawAmount = ReturnAmountOFChiose();
-            if (WithdrawAmount > 0 && c.AccountBalance > WithdrawAmount) {
-                c.AccountBalance -= WithdrawAmount;
-                cout << "Withdraw successful. New balance: " << endl;
-                printClient(c);
-            }
-            break;
-        }
+
+    WithdrawAmount = ReturnAmountOFChiose();
+    if (WithdrawAmount > 0 && CurrentClient.AccountBalance  > WithdrawAmount) {
+        CurrentClient.AccountBalance -= WithdrawAmount;
+        cout << "Withdraw successful. New balance: " << CurrentClient.AccountBalance << endl;
+        
     }
+       
+      
 
     if (!found) {
         cout << "\nClient not found.\n";
@@ -363,31 +341,33 @@ void StartToMakeNormalWithdrawClient() {
         clients.push_back(extractClient(text, i));
     }
     Datefromcastomar result = FindClientByAccountNumber(ClintNumber, clients);
-    printClient(result);
+    cout << "Youer Balance is " << CurrentClient.AccountBalance << endl; 
     bool found = false;
+    
+    char chose = ' ';
+   
+    int  WithdrawAmount; 
+    do
+    {
 
-    int  WithdrawAmount;
-    for (auto& c : clients) {
-        if (c.AccountNumber == ClintNumber) {
-            found = true;
-            do
-            {
+        WithdrawAmount = GetDepositAmount("Enter Withdraw Amount ? ");
 
-                WithdrawAmount = GetDepositAmount("Enter Withdraw Amount ? ");
+    } while (!(WithdrawAmount > 0 && CurrentClient.AccountBalance > WithdrawAmount && WithdrawAmount % 100 == 0));
+    cout << " You are Sure  to Make Deposit (y / n) \n";
+    cin >> chose;
+    if (chose == 'y' || chose == 'Y')
+    {
+        cout << "Opreration Suceccful \n";
 
-            } while (!(WithdrawAmount > 0 && c.AccountBalance > WithdrawAmount && WithdrawAmount % 100 == 0));
-
-            c.AccountBalance -= WithdrawAmount;
-            cout << "Withdraw successful. New balance: " << endl;
-            printClient(c);
-
-            break;
-        }
     }
-
-    if (!found) {
-        cout << "\nClient not found.\n";
+    else
+    {
+        cout << "Press Any Key To Return ...";
+        _getch();
     }
+    CurrentClient.AccountBalance -= WithdrawAmount;
+    cout << "Withdraw successful. New balance: " << CurrentClient.AccountBalance << endl;
+
     SaveClientsToFile(clients, "emplyeefile.txt");
 
 }
@@ -398,20 +378,9 @@ void StartToClaTotalBalanced()
     cout << "\t\t Total Balanced Mode \t\t              \n\n";
     cout << "==================================================================================================\n\n";
 
-    string fileContent = ReadFile("emplyeefile.txt");
-    vector<string> text;
-    splitFunction(fileContent, text, "#//");  // You forgot this
 
-    double TotlalBalanced = 0;
-
-    for (size_t i = 0; i + 4 < text.size(); i += 5) {
-        Datefromcastomar client = extractClient(text, i);
-        if (client.found) {
-            TotlalBalanced += client.AccountBalance;
-        }
-    }
     
-    cout << "\nTotal Balance for All Clients: " << TotlalBalanced << " \n";
+    cout << "\nTotal Balance for All Clients: " <<CurrentClient.AccountBalance << " \n";
 }
 
 void StartttoATM()
