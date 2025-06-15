@@ -8,16 +8,23 @@ class Info
 	string _FullName; 
 	string _Email; 
 	string _Phone;
-	string _Subject; 
-	string _Body;
+
 	string _Massage; 
+
+public:
+
+	Info(string Id  , string FristName , string LastName  , string FullName  , string Email , string Phone  )
+	{
+		_Id = Id; 
+		_FristName = FristName; 
+		_LastName = LastName; 
+		_FullName = FullName; 
+		_Email = Email; 
+		_Phone = Phone; 
+	}
 	void setFristName(string FristName)
 	{
 		_FristName = FristName;
-	}
-	void SetID(string  ID)
-	{
-		_Id = ID;
 	}
 	void setLastName(string LastName)
 	{
@@ -35,75 +42,35 @@ class Info
 	{
 		_Phone = Phone;
 	}
-	void SetSubject(string Subject)
-	{
-		_Subject = Subject; 
-	}
-	string GetSubject(string Subject)
-	{
-		SetSubject(Subject); 
-		return _Subject;
-	}
-	void SetBody(string Body)
-	{
-		_Body = Body; 
-	}
-	void SetMassage(string Massage)
-	{
-		_Massage = Massage; 
-	}
-	string GetBody(string Body)
-	{
-		SetBody(Body);
-		return _Body;
-	}
-	string GetMassage(string Massage)
-	{
-		SetMassage(Massage);
-		return _Massage;
-	}
-public :
 
-	Info(string Id  , string FristName , string LastName  , string FullName  , string Email , string Phone  )
+	string FristName()
 	{
-		_Id = Id; 
-		_FristName = FristName; 
-		_LastName = LastName; 
-		_FullName = FullName; 
-		_Email = Email; 
-		_Phone = Phone; 
-	}
-
-
-
-	string FristName(string FristName)
-	{
-		setFristName(FristName);
+		
 		return _FristName; 
 	}
 
-	string  ID(string ID)
+	string  ID()
 	{
-		SetID(ID); 
+		//SetID(ID); Read only property ;  
 		return _Id; 
 	}
 
-	string LastName(string LastName)
+	string LastName(string)
 	{
-		setLastName(LastName); 
+		
 		return _LastName; 
 
 	}
 
-	string FullName(string FullName)
+	string FullName()
 	{
-		SetFullName(FullName); 
+ 
 		return _FullName; 
 	}
 
-	string Email(string Email )
+	string Email( )
 	{
-		SetEmail(Email); 
+ 
 		return _Email; 
 	}
 
@@ -114,18 +81,17 @@ public :
 	}
 	void SendEmail(string Subject, string Body)
 	{
-		GetSubject(Subject );
-		GetBody(Body); 
+ 
 		cout << "The Follwoing email Has Send successful to email " << _Email  <<" \n"; 
-		cout << "Subiect :" << _Subject <<endl ;
-		cout << "Body :" << _Body << endl << endl ; 
+		cout << "Subiect :" << Subject <<endl ;
+		cout << "Body :" << Body << endl << endl ; 
 		
 	}
 	void SenSMS(string Massage)
 	{
-		GetMassage(Massage); 
+	 
 		cout << "The Follwoing SMS has Send successful to phone " << _Phone << "  \n"; 
-		cout << _Massage << endl; 
+		cout << Massage << endl; 
 	}
 	void Print()
 	{
