@@ -1,4 +1,4 @@
-//Polymorphism make thine have to uses for Ex  1_Fanction OverLoading , fanction  Overriding  , Virtual Fanction , operator Overloading  ;  
+//Polymorphism make Fanction  have to uses for Ex  1_Fanction OverLoading , fanction  Overriding  , Virtual Fanction , operator Overloading  ;  
 // Abstrct class OR  interface Class  Make it to define fantion do  you need to implement this in Drived class inhetanes this class  
 // frind class make class can acess privet member inside a drived class  , frind faction make fanction can ascess all memebers  in super class  ; 
 
